@@ -2,7 +2,7 @@
 
 ## Summary
 
-This demo shows how to investigate AWS CloudTrail activity as a graph without moving the analytical tables out of Microsoft OneLake. It uses the public anonymized CloudTrail dataset from [flaws.cloud](https://summitroute.com/blog/2018/06/28/flaws_cloudtrail_logs/) and preserves the original security graph model.
+This demo shows how to investigate AWS CloudTrail activity as a graph without moving the analytical tables out of Microsoft OneLake. It uses the public anonymized CloudTrail dataset from [flaws.cloud](http://flaws.cloud/) and preserves the original security graph model.
 
 You will:
 
