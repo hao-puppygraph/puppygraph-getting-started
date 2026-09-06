@@ -405,63 +405,6 @@ identity count, and identity IDs, ordered by identity count.
 
 Shared IP addresses can be benign proxies, NAT gateways, scanners, corporate egress addresses, or automation. Because the dataset is anonymized, treat its IPs as analytical identifiers rather than actionable threat intelligence.
 
-### Follow-up prompts
-
-You can refine an investigation without writing a graph query manually:
-
-```text
-Limit the previous result to activity from the most active identity.
-```
-
-```text
-For each matching event, include its timestamp and event name.
-```
-
-```text
-Explain which node labels, relationships, and filters you used.
-```
-
-If a question returns no rows, ask AI Chat to show or explain the generated query. Confirm that the prompt uses the property values and date range present in the sample data.
-
-## AI Chat usage notes
-
-- Never paste model API keys, client secrets, or access tokens into a chat message.
-- Use bounded requests such as `top 20` or `limit 50` during exploration.
-- Review generated queries before using them in production workflows.
-- Treat AI-generated explanations as investigation assistance, not as final security findings.
-- Configure PuppyGraph role-based and row-level access controls when different users require different data access.
-
-AI Chat may send catalog metadata, sampled rows, and generated queries to the configured model endpoint. Use a model deployment and data-handling policy appropriate for your organization.
-
-## Troubleshooting
-
-### PuppyGraph cannot discover the tables
-
-- Confirm that the six Delta tables are under the lakehouse `Tables` area rather than `Files`.
-- Confirm that Delta-to-Iceberg virtualization is enabled.
-- Check that every table contains generated Iceberg `metadata` files.
-- Verify the `<workspace_id>/<lakehouse_id>` warehouse value.
-- Confirm that the service principal can read the lakehouse.
-
-### OneLake authentication fails
-
-- Confirm that the tenant ID, client ID, and client secret are correct.
-- Confirm that the client secret has not expired.
-- Confirm that external OneLake access and service-principal Fabric API access are enabled by the tenant administrator.
-- Confirm that the OAuth scope is `https://storage.azure.com/.default`.
-
-### AI Chat is unavailable
-
-- Confirm that `AI_ENABLED=true` was passed to the container.
-- Confirm that `AI_API_STRUCTURE` matches the configured endpoint.
-- Confirm that `AI_BASE_URL` is a base URL rather than a complete model endpoint.
-- Confirm that `AI_MODELS` contains model IDs published by the provider.
-- Confirm that the selected model supports streaming and tool calling.
-
-### AI Chat returns an unexpected query
-
-Ask it to explain the labels, relationships, properties, and filters it used. Make the prompt more explicit and include a result limit. For application or detection logic, review and retain the validated graph query instead of relying on an unconstrained prompt.
-
 ## Cleanup
 
 Stop and remove the PuppyGraph container:
