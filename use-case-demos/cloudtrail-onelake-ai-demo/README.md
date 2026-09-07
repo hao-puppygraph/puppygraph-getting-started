@@ -168,63 +168,57 @@ Keep the client secret outside source control. You enter it when creating the On
 
 ## 4. Start PuppyGraph with AI Chat
 
-PuppyGraph AI Chat calls an external model API. Choose one of the following configurations.
+PuppyGraph AI Chat calls an external model API. Create a file named `puppygraph.env` using one of the following configurations.
 
 ### Option A: Anthropic-compatible API
 
-Set the API key in your shell:
-
-```bash
-export ANTHROPIC_API_KEY='<your-api-key>'
-```
-
-Start PuppyGraph:
-
-```bash
-docker run -d --name puppygraph \
-  -p 8081:8081 \
-  -p 8182:8182 \
-  -p 7687:7687 \
-  -e PUPPYGRAPH_USERNAME=puppygraph \
-  -e PUPPYGRAPH_PASSWORD=puppygraph123 \
-  -e QUERY_TIMEOUT=5m \
-  -e AI_ENABLED=true \
-  -e AI_API_STRUCTURE=anthropic_style \
-  -e AI_BASE_URL=https://api.anthropic.com \
-  -e AI_MODELS='<anthropic-model-id>' \
-  -e AI_API_KEY="$ANTHROPIC_API_KEY" \
-  --pull=always \
-  puppygraph/puppygraph:1.8.1
+```dotenv
+PUPPYGRAPH_USERNAME=puppygraph
+PUPPYGRAPH_PASSWORD=puppygraph123
+QUERY_TIMEOUT=5m
+AI_ENABLED=true
+AI_API_STRUCTURE=anthropic_style
+AI_BASE_URL=https://api.anthropic.com
+AI_MODELS=<anthropic-model-id>
+AI_API_KEY=<your-api-key>
 ```
 
 ### Option B: OpenAI-compatible API
 
-Set the API key in your shell:
-
-```bash
-export OPENAI_API_KEY='<your-api-key>'
+```dotenv
+PUPPYGRAPH_USERNAME=puppygraph
+PUPPYGRAPH_PASSWORD=puppygraph123
+QUERY_TIMEOUT=5m
+AI_ENABLED=true
+AI_API_STRUCTURE=openai_style
+AI_BASE_URL=https://api.openai.com/v1
+AI_MODELS=<openai-model-id>
+AI_API_KEY=<your-api-key>
 ```
 
-Start PuppyGraph:
+Replace the model ID and API key placeholders with your actual values. The selected model must support streaming and tool calling. Replace the example password before exposing PuppyGraph outside your local machine.
+
+Use plain `KEY=value` entries without surrounding quotes or `export`. Enter the API key directly; Docker's `--env-file` does not expand shell variables such as `$ANTHROPIC_API_KEY`.
+
+### Start PuppyGraph
+
+From the directory containing `puppygraph.env`, run:
 
 ```bash
 docker run -d --name puppygraph \
   -p 8081:8081 \
   -p 8182:8182 \
   -p 7687:7687 \
-  -e PUPPYGRAPH_USERNAME=puppygraph \
-  -e PUPPYGRAPH_PASSWORD=puppygraph123 \
-  -e QUERY_TIMEOUT=5m \
-  -e AI_ENABLED=true \
-  -e AI_API_STRUCTURE=openai_style \
-  -e AI_BASE_URL=https://api.openai.com/v1 \
-  -e AI_MODELS='<openai-model-id>' \
-  -e AI_API_KEY="$OPENAI_API_KEY" \
+  --env-file ./puppygraph.env \
   --pull=always \
   puppygraph/puppygraph:1.8.1
 ```
 
-Replace the example password before exposing PuppyGraph outside your local machine. The selected model must support streaming and tool calling.
+Keep `puppygraph.env` out of version control by adding the following entry to your `.gitignore`:
+
+```gitignore
+puppygraph.env
+```
 
 ## 5. Connect PuppyGraph to OneLake
 
