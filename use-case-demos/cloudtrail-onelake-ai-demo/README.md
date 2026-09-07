@@ -306,13 +306,10 @@ session ID, event name, event time, resource name, and resource type.
 Equivalent openCypher:
 
 ```cypher
-MATCH (a:Account)-[:HasIdentity]->(i:Identity)
-      -[:HasSession]->(s:Session)
-      -[:RecordsEvent]->(e:Event)
-      -[:OperatesOn]->(r:Resource)
-RETURN a.account_id AS account_id,
-       i.identity_id AS identity_id,
-       s.session_id AS session_id,
+MATCH (a:Account)-[:HasIdentity]->(i:Identity)-[:HasSession]->(s:Session)-[:RecordsEvent]->(e:Event)-[:OperatesOn]->(r:Resource)
+RETURN elementId(a) AS account_id,
+       elementId(i) AS identity_id,
+       elementId(s) AS session_id,
        e.event_name AS event_name,
        e.event_time AS event_time,
        r.resource_name AS resource_name,
@@ -335,14 +332,14 @@ and event count, ordered from highest to lowest.
 Equivalent openCypher:
 
 ```cypher
-MATCH (i:Identity)-[:HasSession]->(:Session)-[:RecordsEvent]->(e:Event)
-WHERE e.event_time >= datetime("2017-02-01T00:00:00")
-  AND e.event_time < datetime("2017-03-01T00:00:00")
-RETURN i.identity_id AS identity_id,
-       i.type AS identity_type,
-       count(e) AS event_count
+MATCH (e:Event)
+WHERE e.event_time >= datetime('2017-02-01T00:00:00') AND e.event_time < datetime('2017-03-01T00:00:00')
+WITH e.identity_id AS arn, count(e) AS event_count
 ORDER BY event_count DESC
 LIMIT 25
+OPTIONAL MATCH (i:Identity {arn: arn})
+RETURN arn AS identity_id, i.type AS identity_type, event_count
+ORDER BY event_count DESC
 ```
 
 Event volume is not proof of compromise. Use it as a starting signal alongside event names, source IPs, user agents, and resource activity.
@@ -362,14 +359,14 @@ Equivalent openCypher:
 
 ```cypher
 MATCH (e:Event)-[:OperatesOn]->(r:Resource)
-WHERE r.resource_type = "s3bucket"
+WHERE r.resource_type = 's3bucket'
 RETURN e.identity_id AS identity_id,
        e.source_ip AS source_ip,
        e.event_name AS event_name,
        e.event_time AS event_time,
        r.resource_name AS resource_name,
        r.resource_type AS resource_type
-ORDER BY event_time DESC
+ORDER BY e.event_time DESC
 LIMIT 100
 ```
 
