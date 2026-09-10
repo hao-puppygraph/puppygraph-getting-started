@@ -32,7 +32,7 @@ The host running PuppyGraph must be able to reach the OneLake endpoints, the Mic
 
 The demo uses the public anonymized AWS CloudTrail dataset from [flaws.cloud](https://summitroute.com/blog/2020/10/09/public_dataset_of_cloudtrail_logs_from_flaws_cloud/), a security training environment created by Scott Piper. The archive contains approximately 1.9 million CloudTrail events that simulate realistic activity and attack scenarios in AWS. Although CloudTrail produced the source records, the demo stores the processed data in Microsoft OneLake as Delta tables.
 
-CloudTrail records contain useful investigation context, including the AWS account, acting identity, assumed-role session, API operation, event timestamp, source IP address, user agent, request and response data, and affected cloud resource. The preparation script normalizes those nested JSON records into six tables:
+CloudTrail records contain useful investigation context, including the AWS account, acting identity, assumed-role session, API operation, event timestamp, source IP address, user agent, request and response data, and affected cloud resource. The preparation script normalizes those nested JSON records into six tables under the `security_graph` schema:
 
 | **Table** | **Purpose** | **Key fields** |
 | --- | --- | --- |
