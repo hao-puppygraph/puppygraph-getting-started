@@ -133,11 +133,14 @@ security_graph.<table_name>
 The script retains the original table fields and graph-key generation logic, but writes with the Fabric Spark catalog instead of the Amazon S3 Tables catalog. It parses the archive as a stream and writes rows in batches to avoid loading all 1.9 million events into driver memory at once.
 
 Running the script truncates the six demo tables before loading them. Do not point it at production tables.
-<img width="1999" height="1303" alt="image7" src="https://github.com/user-attachments/assets/d00cc3b4-8fef-4e14-b125-221e0b9457da" />
 
 After the job completes, confirm that the six expected tables appear under the `security_graph` schema in the lakehouse explorer.
-<img width="1999" height="1303" alt="image7" src="https://github.com/user-attachments/assets/0645cb4f-c1de-4a09-9408-bc47b467966c" />
 
+<img width="1999" height="1303" alt="image7" src="https://github.com/user-attachments/assets/d00cc3b4-8fef-4e14-b125-221e0b9457da" />
+*Importing CloudTrail data into OneLake as Delta tables using a Fabric notebook.*
+
+<img width="1999" height="1303" alt="image3" src="https://github.com/user-attachments/assets/3ef97c04-f9da-4deb-b4e6-afb7cc770cab" />
+*The CloudTrail dataset is stored in the lakehouse’s Files area and transformed with Apache Spark into six Delta tables under the security_graph schema.*
 
 ### 2.4 Verify Iceberg virtualization
 
