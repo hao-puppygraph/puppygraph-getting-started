@@ -182,6 +182,8 @@ docker run -d --name puppygraph \
   puppygraph/puppygraph:1.8.1
 ```
 
+For the purpose of stability and reproducibility, we use the version `1.8.1` instead of `latest` or `stable`.
+
 Keep `puppygraph.env` out of version control by adding the following entry to your `.gitignore`:
 
 ```gitignore
