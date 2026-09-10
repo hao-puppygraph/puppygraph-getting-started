@@ -2,7 +2,7 @@
 
 ## Summary
 
-This demo shows how to investigate AWS CloudTrail activity as a graph without moving the analytical tables out of Microsoft OneLake. It uses the public anonymized CloudTrail dataset from [flaws.cloud](http://flaws.cloud/) and preserves the original security graph model.
+This demo shows how to investigate AWS CloudTrail activity as a graph without moving the analytical tables out of Microsoft OneLake. It uses the public anonymized CloudTrail dataset from [flaws.cloud](https://summitroute.com/blog/2020/10/09/public_dataset_of_cloudtrail_logs_from_flaws_cloud/) and preserves the original security graph model.
 
 You will:
 
@@ -14,27 +14,6 @@ You will:
 6. Approve the schema changes and investigate accounts, identities, sessions, events, and resources in natural language.
 
 PuppyGraph reads the existing OneLake tables in place. The demo does not copy the tables into a separate graph database or create a second graph data pipeline.
-
-## Architecture
-
-```text
-CloudTrail JSON
-      |
-      v
-Fabric notebook
-      |
-      v
-Delta tables in a Fabric lakehouse
-      |
-      v
-OneLake virtual Iceberg metadata
-      |
-      v
-PuppyGraph security graph
-      |
-      v
-AI Chat natural-language investigations
-```
 
 ## Prerequisites
 
