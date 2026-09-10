@@ -30,16 +30,18 @@ The host running PuppyGraph must be able to reach the OneLake endpoints, the Mic
 
 ## Demo data
 
-The demo uses anonymized AWS CloudTrail logs from [flaws.cloud](https://summitroute.com/blog/2020/10/09/public_dataset_of_cloudtrail_logs_from_flaws_cloud/), a security training environment created by Scott Piper. Although the events originated in AWS, this version stores the processed data as Delta tables in Microsoft OneLake.
+The demo uses the public anonymized AWS CloudTrail dataset from [flaws.cloud](https://summitroute.com/blog/2020/10/09/public_dataset_of_cloudtrail_logs_from_flaws_cloud/), a security training environment created by Scott Piper. The archive contains approximately 1.9 million CloudTrail events that simulate realistic activity and attack scenarios in AWS. Although CloudTrail produced the source records, the demo stores the processed data in Microsoft OneLake as Delta tables.
 
-The preparation script produces six tables under the `security_graph` schema. Together, they support the following investigation path:
+CloudTrail records contain useful investigation context, including the AWS account, acting identity, assumed-role session, API operation, event timestamp, source IP address, user agent, request and response data, and affected cloud resource. The preparation script normalizes those nested JSON records into six tables:
 
-```text
-(Account)-[:HasIdentity]->(Identity)
-         -[:HasSession]->(Session)
-         -[:RecordsEvent]->(Event)
-         -[:OperatesOn]->(Resource)
-```
+| **Table** | **Purpose** | **Key fields** |
+| --- | --- | --- |
+| account | AWS account boundary | `account_id`, `account_alias` |
+| identity | IAM users, roles, and assumed identities | `identity_id`, `type`, `principal_id`, `account_id` |
+| session | Authenticated or assumed-role sessions | `session_id`, `creation_date`, `mfa_authenticated`, `identity_id` |
+| event | Normalized CloudTrail events | `event_id`, `event_time`, `event_name`, `source_ip`, `session_id`, `identity_id` |
+| resource | Cloud infrastructure and service resources | `resource_id`, `resource_name`, `resource_type` |
+| eventresource | Event-to-resource relationships | `event_id`, `resource_id`, `pre_state`, `post_state` |
 
 The preparation step exists only to populate the public sample data. For a production deployment, PuppyGraph can map equivalent tables that already exist in OneLake.
 
