@@ -30,7 +30,7 @@ The host running PuppyGraph must be able to reach the OneLake endpoints, the Mic
 
 ## Demo data
 
-The demo uses anonymized AWS CloudTrail logs from [flaws.cloud](https://summitroute.com/blog/2018/06/28/flaws_cloudtrail_logs/), a security training environment created by Scott Piper. Although the events originated in AWS, this version stores the processed data as Delta tables in Microsoft OneLake.
+The demo uses anonymized AWS CloudTrail logs from [flaws.cloud](https://summitroute.com/blog/2020/10/09/public_dataset_of_cloudtrail_logs_from_flaws_cloud/), a security training environment created by Scott Piper. Although the events originated in AWS, this version stores the processed data as Delta tables in Microsoft OneLake.
 
 The preparation script produces six tables under the `security_graph` schema. Together, they support the following investigation path:
 
