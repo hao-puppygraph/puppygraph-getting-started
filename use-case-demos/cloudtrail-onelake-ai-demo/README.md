@@ -151,8 +151,6 @@ Keep the client secret outside source control. You enter it when creating the On
 
 PuppyGraph AI Chat calls an external model API. Create a file named `puppygraph.env` using one of the following configurations.
 
-### Option A: Anthropic-compatible API
-
 ```dotenv
 PUPPYGRAPH_USERNAME=puppygraph
 PUPPYGRAPH_PASSWORD=puppygraph123
@@ -164,18 +162,7 @@ AI_MODELS=<anthropic-model-id>
 AI_API_KEY=<your-api-key>
 ```
 
-### Option B: OpenAI-compatible API
-
-```dotenv
-PUPPYGRAPH_USERNAME=puppygraph
-PUPPYGRAPH_PASSWORD=puppygraph123
-QUERY_TIMEOUT=5m
-AI_ENABLED=true
-AI_API_STRUCTURE=openai_style
-AI_BASE_URL=https://api.openai.com/v1
-AI_MODELS=<openai-model-id>
-AI_API_KEY=<your-api-key>
-```
+If you prefer OpenAI, please check out more details in our [documents for the built-in Chatbot](https://docs.puppygraph.com/ai/built-in-chatbot/).
 
 Replace the model ID and API key placeholders with your actual values. The selected model must support streaming and tool calling. Replace the example password before exposing PuppyGraph outside your local machine.
 
