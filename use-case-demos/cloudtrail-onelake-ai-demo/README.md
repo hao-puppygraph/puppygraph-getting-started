@@ -136,12 +136,6 @@ Running the script truncates the six demo tables before loading them. Do not poi
 
 After the job completes, confirm that the six expected tables appear under the `security_graph` schema in the lakehouse explorer.
 
-<img width="1999" height="1303" alt="image7" src="https://github.com/user-attachments/assets/d00cc3b4-8fef-4e14-b125-221e0b9457da" />
-*Importing CloudTrail data into OneLake as Delta tables using a Fabric notebook.*
-
-<img width="1999" height="1303" alt="image3" src="https://github.com/user-attachments/assets/3ef97c04-f9da-4deb-b4e6-afb7cc770cab" />
-*The CloudTrail dataset is stored in the lakehouse’s Files area and transformed with Apache Spark into six Delta tables under the security_graph schema.*
-
 ### 2.4 Verify Iceberg virtualization
 
 For each Delta table:
