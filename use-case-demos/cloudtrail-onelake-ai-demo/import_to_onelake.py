@@ -306,10 +306,11 @@ def load_data(spark):
             candidates.append((inferred_name, inferred_type, {}, "", ""))
 
         for name, resource_type, metadata, pre_state, post_state in candidates:
-            resource_id = resource_ids.get(name)
+            resource_key = (resource_type, name)
+            resource_id = resource_ids.get(resource_key)
             if resource_id is None:
-                resource_id = str(uuid.uuid5(uuid.NAMESPACE_URL, f"cloudtrail-resource:{name}"))
-                resource_ids[name] = resource_id
+                resource_id = str(uuid.uuid5(uuid.NAMESPACE_URL, f"cloudtrail-resource:{resource_type}:{name}"))
+                resource_ids[resource_key] = resource_id
                 buffers["resource"].append({
                     "resource_id": resource_id,
                     "resource_name": name,

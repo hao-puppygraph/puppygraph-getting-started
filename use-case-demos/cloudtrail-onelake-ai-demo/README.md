@@ -105,7 +105,7 @@ Restart the Python session if Fabric asks you to do so. Add the contents of `imp
 /lakehouse/default/Files/cloudtrail_raw/flaws_cloudtrail_logs.tar
 ```
 
-and write the resulting DataFrames as Delta tables under:
+and writes the resulting DataFrames as Delta tables under:
 
 ```text
 security_graph.<table_name>
@@ -162,7 +162,7 @@ AI_MODELS=<anthropic-model-id>
 AI_API_KEY=<your-api-key>
 ```
 
-If you prefer OpenAI, please check out more details in our [documents for the built-in Chatbot](https://docs.puppygraph.com/ai/built-in-chatbot/).
+For OpenAI, please check out more details in our [documents for the built-in Chatbot](https://docs.puppygraph.com/ai/built-in-chatbot/).
 
 Replace the model ID and API key placeholders with your actual values. The selected model must support streaming and tool calling. Replace the example password before exposing PuppyGraph outside your local machine.
 
